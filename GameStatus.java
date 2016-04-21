@@ -8,13 +8,15 @@ public class GameStatus {
 	private boolean gameStarted = false;
 	private boolean gameStarting = false;
 	private boolean gameOver = false;
+	private boolean nextLevel = false;
+	
 	
 	// status variables
 	private boolean newShip;
 	private boolean newAsteroid;
 	private long asteroidsDestroyed = 0;
 	private int shipsLeft;
-	private int score = 0;
+	private long score = 0;
 	
 	public GameStatus(){
 		
@@ -55,6 +57,19 @@ public class GameStatus {
 	public synchronized void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
+	
+	/**
+	 * Indicates if the next level has been reached and the "Next Level" message is displaying.
+	 * @return if the next level has been reached and "Next Level" message is displaying
+	 */
+	public synchronized boolean isNextLevel() {
+		return nextLevel;
+	}
+	
+	public synchronized void setNextLevel(boolean nextLevel) {
+		this.nextLevel = nextLevel;
+	}
+	
 	
 	/**
 	 * Indicates if a new ship should be created/drawn.
@@ -108,11 +123,11 @@ public class GameStatus {
 	 * Returns current score.
 	 * @return current score
 	 */
-	public synchronized int getScore() {
+	public synchronized long getScore() {
 		return score;
 	} 
 	
-	public synchronized void setScore(int score) {
+	public synchronized void setScore(long score) {
 		this.score = score;
 	} 
 
