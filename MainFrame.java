@@ -30,6 +30,9 @@ public class MainFrame extends JFrame {
 	private JLabel pointsLabel;
 	private JLabel pointsValueLabel;
 	
+	private JLabel levelLabel;
+	private JLabel levelNumber;
+	
 	/**
 	 * This is the default constructor
 	 */
@@ -44,7 +47,7 @@ public class MainFrame extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(502, 440);
+		this.setSize(802, 640);
 		this.setContentPane(getJContentPane());
 		this.setTitle("Void Space");
 //		this.setResizable(false);
@@ -63,6 +66,18 @@ public class MainFrame extends JFrame {
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
+			gridBagConstraints8.insets = new Insets(0, 0, 0, 0);
+			gridBagConstraints8.gridy = 1;
+			gridBagConstraints8.anchor = GridBagConstraints.WEST;
+			gridBagConstraints8.weightx = 1.0D;
+			gridBagConstraints8.gridx = 7;
+			GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
+			gridBagConstraints7.insets = new Insets(0, 0, 0, 0);
+			gridBagConstraints7.gridy = 1;
+			gridBagConstraints7.anchor = GridBagConstraints.EAST;
+			gridBagConstraints7.weightx = 1.0D;
+			gridBagConstraints7.gridx = 6;
 			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
 			gridBagConstraints6.insets = new Insets(0, 0, 0, 0);
 			gridBagConstraints6.gridy = 1;
@@ -111,6 +126,8 @@ public class MainFrame extends JFrame {
 			destroyedValueLabel = new JLabel("0");
 			pointsLabel = new JLabel("Score: ");	
 			pointsValueLabel = new JLabel("0");	
+			levelLabel = new JLabel("LEVEL ");	
+			levelNumber = new JLabel("1");	
 			jContentPane = new JPanel();
 			jContentPane.setLayout(new GridBagLayout());
 			jContentPane.setBackground(new Color(0x78943));
@@ -121,6 +138,8 @@ public class MainFrame extends JFrame {
 			jContentPane.add(destroyedValueLabel, gridBagConstraints4);
 			jContentPane.add(pointsLabel, gridBagConstraints5);	
 			jContentPane.add(pointsValueLabel, gridBagConstraints6); 
+			jContentPane.add(levelLabel, gridBagConstraints7);	
+			jContentPane.add(levelNumber, gridBagConstraints8); 
 
 		}
 		return jContentPane;
@@ -137,6 +156,7 @@ public class MainFrame extends JFrame {
 			gameScreen.setShipsValueLabel(shipsValueLabel);
 			gameScreen.setDestroyedValueLabel(destroyedValueLabel);
 			gameScreen.setPointsValueLabel(pointsValueLabel);
+			gameScreen.setLevelNumberLabel(levelNumber); 
 		}
 		return gameScreen;
 	}
