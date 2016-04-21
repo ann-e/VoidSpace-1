@@ -9,7 +9,8 @@ public class GameStatus {
 	private boolean gameStarting = false;
 	private boolean gameOver = false;
 	private boolean nextLevel = false;
-	
+	private boolean levelingUp = false;
+
 	
 	// status variables
 	private boolean newShip;
@@ -59,8 +60,8 @@ public class GameStatus {
 	}
 	
 	/**
-	 * Indicates if the next level has been reached and the "Next Level" message is displaying.
-	 * @return if the next level has been reached and "Next Level" message is displaying
+	 * Indicates if the next level has been reached.
+	 * @return if the next level has been reached
 	 */
 	public synchronized boolean isNextLevel() {
 		return nextLevel;
@@ -68,6 +69,18 @@ public class GameStatus {
 	
 	public synchronized void setNextLevel(boolean nextLevel) {
 		this.nextLevel = nextLevel;
+	}
+	
+	/**
+	 * Indicates if the leveling up message is displaying.
+	 * @return if the level up message is displaying
+	 */
+	public synchronized boolean isLevelingUp() {
+		return levelingUp;
+	}
+	
+	public synchronized void setLevelingUp(boolean levelingUp) {
+		this.levelingUp = levelingUp;
 	}
 	
 	
