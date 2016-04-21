@@ -26,9 +26,8 @@ public class GameLogic {
 	private Asteroid asteroid;
 	private List<Bullet> bullets;
 	private EnemyShip enemyShip;
-	
 	/**
-	 * Create a new game logic handler
+	 * Craete a new game logic handler
 	 * @param gameScreen the game screen
 	 */
 	public GameLogic(GameScreen gameScreen){
@@ -76,7 +75,6 @@ public class GameLogic {
 		// init the ship and the asteroid
         newShip(gameScreen);
         newAsteroid(gameScreen);
-        newEnemyShip(gameScreen);
         
         // prepare game screen
         gameScreen.doNewGame();
@@ -154,12 +152,10 @@ public class GameLogic {
 		return ship;
 	}
 	
-	/**
-	 * Creates a new enemy ship.
-	 */
-	public EnemyShip newEnemyShip(GameScreen screen) {
+	public EnemyShip newEnemyShip(GameScreen screen){
 		this.enemyShip = new EnemyShip(screen);
 		return enemyShip;
+		
 	}
 	
 	/**
@@ -167,6 +163,8 @@ public class GameLogic {
 	 */
 	public Asteroid newAsteroid(GameScreen screen){
 		this.asteroid = new Asteroid(screen);
+		
+
 		return asteroid;
 	}
 	
@@ -177,15 +175,10 @@ public class GameLogic {
 	public Ship getShip() {
 		return ship;
 	}
-	
-	/**
-	 * Returns the enemy ship.
-	 * @return enemy ship
-	 */
-	public EnemyShip getEnemyShip() {
+
+	public EnemyShip getEnemyShip(){
 		return enemyShip;
 	}
-
 	/**
 	 * Returns the asteroid.
 	 * @return the asteroid
