@@ -18,9 +18,10 @@ import rbadia.voidspace.sounds.SoundManager;
  * Handles general game logic and status.
  */
 public class GameLogic {
-	private GameScreen gameScreen;
-	private GameStatus status;
+	protected GameScreen gameScreen;
+	protected GameStatus status;
 	private SoundManager soundMan;
+	private Level level;
 	
 	private Ship ship;
 	private Asteroid asteroid;
@@ -62,7 +63,7 @@ public class GameLogic {
 	/**
 	 * Prepare for a new game.
 	 */
-	public void newGame(){
+	public void newGame(){  						// we can accept these as parameters in a levelUp method
 		status.setGameStarting(true);
 		
 		// init game variables
@@ -90,6 +91,28 @@ public class GameLogic {
 		});
 		timer.setRepeats(false);
 		timer.start();
+	}
+	
+	
+	public void levelUp() {
+		
+		int asteroidsDestroyed = (int) status.getAsteroidsDestroyed();
+		
+		switch (asteroidsDestroyed) {
+		
+		case 5: 
+			
+		case 25:
+			System.out.println("lvl 3");
+		case 50: 
+			System.out.println("lvl 4");
+		case 75:
+			System.out.println("lvl 5");
+		
+		
+		
+		}
+
 	}
 	
 	/**
