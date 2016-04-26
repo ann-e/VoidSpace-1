@@ -18,18 +18,16 @@ import rbadia.voidspace.sounds.SoundManager;
  * Handles general game logic and status.
  */
 public class GameLogic {
-	protected GameScreen gameScreen;
-	protected GameStatus status;
+	private GameScreen gameScreen;
+	private GameStatus status;
 	private SoundManager soundMan;
-	private Level level;
 	
 	private Ship ship;
 	private Asteroid asteroid;
 	private List<Bullet> bullets;
 	private EnemyShip enemyShip;
-	
 	/**
-	 * Create a new game logic handler
+	 * Craete a new game logic handler
 	 * @param gameScreen the game screen
 	 */
 	public GameLogic(GameScreen gameScreen){
@@ -63,7 +61,7 @@ public class GameLogic {
 	/**
 	 * Prepare for a new game.
 	 */
-	public void newGame(){  						// we can accept these as parameters in a levelUp method
+	public void newGame(){
 		status.setGameStarting(true);
 		
 		// init game variables
@@ -78,7 +76,6 @@ public class GameLogic {
         newShip(gameScreen);
         newAsteroid(gameScreen);
         newEnemyShip(gameScreen);
-        
         // prepare game screen
         gameScreen.doNewGame();
         
@@ -91,28 +88,6 @@ public class GameLogic {
 		});
 		timer.setRepeats(false);
 		timer.start();
-	}
-	
-	
-	public void levelUp() {
-		
-		int asteroidsDestroyed = (int) status.getAsteroidsDestroyed();
-		
-		switch (asteroidsDestroyed) {
-		
-		case 5: 
-			
-		case 25:
-			System.out.println("lvl 3");
-		case 50: 
-			System.out.println("lvl 4");
-		case 75:
-			System.out.println("lvl 5");
-		
-		
-		
-		}
-
 	}
 	
 	/**
@@ -177,12 +152,10 @@ public class GameLogic {
 		return ship;
 	}
 	
-	/**
-	 * Creates a new enemy ship.
-	 */
-	public EnemyShip newEnemyShip(GameScreen screen) {
+	public EnemyShip newEnemyShip(GameScreen screen){
 		this.enemyShip = new EnemyShip(screen);
 		return enemyShip;
+		
 	}
 	
 	/**
@@ -190,6 +163,8 @@ public class GameLogic {
 	 */
 	public Asteroid newAsteroid(GameScreen screen){
 		this.asteroid = new Asteroid(screen);
+		
+
 		return asteroid;
 	}
 	
@@ -200,15 +175,10 @@ public class GameLogic {
 	public Ship getShip() {
 		return ship;
 	}
-	
-	/**
-	 * Returns the enemy ship.
-	 * @return enemy ship
-	 */
-	public EnemyShip getEnemyShip() {
+
+	public EnemyShip getEnemyShip(){
 		return enemyShip;
 	}
-
 	/**
 	 * Returns the asteroid.
 	 * @return the asteroid
