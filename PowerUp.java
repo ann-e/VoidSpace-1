@@ -17,7 +17,10 @@ public class PowerUp extends Rectangle {
 	
 	private Random rand = new Random();
 
-	
+	/**
+	 * Creates new powerup at a random location x at the top of the screen
+	 * @param screen the game screen
+	 */
 	public PowerUp(GameScreen screen) {
 		this.setLocation(
         		rand.nextInt(screen.getWidth() - powerupWidth),
@@ -43,7 +46,7 @@ public class PowerUp extends Rectangle {
 
 	/**
 	 * Sets the current speed of the powerup.
-	 * @param speed
+	 * @param speed the speed to set 
 	 */
 	public void setSpeed(int speed) {
 		this.speed = speed;
@@ -51,7 +54,7 @@ public class PowerUp extends Rectangle {
 
 	/**
 	 * Returns the default speed of the powerup.
-	 * @return
+	 * @return default speed
 	 */
 	public int getDefaultSpeed() {
 		return DEFAULT_SPEED;

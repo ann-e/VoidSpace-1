@@ -17,7 +17,7 @@ public class Asteroid extends Rectangle {
 	private Random rand = new Random();
 	
 	/**
-	 * Crates a new asteroid at a random x location at the top of the screen 
+	 * Creates a new asteroid at a random x location at the top of the screen 
 	 * @param screen the game screen
 	 */
 	public Asteroid(GameScreen screen){

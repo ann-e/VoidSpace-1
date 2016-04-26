@@ -1,7 +1,12 @@
 package rbadia.voidspace.main;
 
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import rbadia.voidspace.model.Ship;
 
@@ -47,23 +52,25 @@ public class InputHandler implements KeyListener{
 
 			Ship ship = gameLogic.getShip();
 			
-			if(shiftIsPressed){
+			if(shiftIsPressed  && (ship != null)){
 				ship.setSpeed(ship.getDefaultSpeed() * 2);
+			} else {
+//				o();
 			}
 
-			if(upIsPressed){
+			if(upIsPressed && (ship != null)){
 				moveShipUp(ship);
 			}
 
-			if(downIsPressed){
+			if(downIsPressed  && (ship != null)){
 				moveShipDown(ship, gameScreen.getHeight());
 			}
 
-			if(leftIsPressed){
+			if(leftIsPressed  && (ship != null)){
 				moveShipLeft(ship);
 			}
 
-			if(rightIsPressed){
+			if(rightIsPressed  && (ship != null)){
 				moveShipRight(ship, gameScreen.getWidth());
 			}
 		}
@@ -109,6 +116,18 @@ public class InputHandler implements KeyListener{
 		}
 	}
 	
+//	JOptionPane.showMessageDialog(this.mainFrame, HOWTOPLAYTEXT
+//			, "How To Play", JOptionPane.PLAIN_MESSAGE);
+	
+	public void o() {
+
+		JFrame f = new JFrame("INFO");
+		f.setBounds(50, 50, 200, 200);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	}
+	
 	/**
 	 * Handle a key input event.
 	 */
@@ -144,6 +163,10 @@ public class InputHandler implements KeyListener{
 			}
 			break;
 		case KeyEvent.VK_SHIFT:
+			GameStatus status2 = gameLogic.getStatus();
+			if (!status2.isGameStarted() && !status2.isGameOver() && !status2.isGameStarting()) {
+				o();
+			}
 			this.shiftIsPressed = true;
 			break;
 		case KeyEvent.VK_ESCAPE:
@@ -175,9 +198,13 @@ public class InputHandler implements KeyListener{
 			break;
 		case KeyEvent.VK_SHIFT:
 			this.shiftIsPressed = false;
+
 			Ship ship = gameLogic.getShip(); 
+			if (ship != null) {
 			ship.setSpeed(ship.getDefaultSpeed());
 			break;
+			} else
+				o();
 		}
 		e.consume();
 	}
