@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -54,15 +55,21 @@ public class GameScreen extends JPanel {
 	private GraphicsManager graphicsMan;
 	private GameLogic gameLogic;
 
-	private int trajectory;
-
+	//private int trajectory; // need a trajectory per asteroid
+	private int ASTEROIDS_TIMING = 2000; // two seconds
 
 	//	int level = 1;  //for lvl number
 
 
 
 
-
+	/**
+	 * This methods creates a new asteroid every 2 seconds
+	 */
+	public void asteroidsBegin() {
+		Timer asteroidTimer = new Timer(true);
+		asteroidTimer.schedule(gameLogic, 0, ASTEROIDS_TIMING);
+	}
 
 	/**
 	 * This method initializes 
@@ -108,9 +115,11 @@ public class GameScreen extends JPanel {
 	 */
 	public void updateScreen(){
 		Ship ship = gameLogic.getShip();
-		Asteroid asteroid = gameLogic.getAsteroid();
+		List<Asteroid> asteroids = gameLogic.getAsteroids();
 		List<Bullet> bullets = gameLogic.getBullets();
 		EnemyShip enemy = gameLogic.getEnemyShip();
+		
+	
 
 		// set original font - for later use
 		if(this.originalFont == null){
@@ -154,12 +163,15 @@ public class GameScreen extends JPanel {
 			return;
 		}
 
-		// draw asteroid
-		if(!status.isNewAsteroid()){
+		// draw asteroids
+		for (Asteroid asteroid : asteroids) {
+		
+		
+		if(!status.isNewAsteroid() && !asteroid.getDestroyed()){
 			// draw the asteroid until it reaches the bottom of the screen
 
 			//Switch to select a random trajectory
-			switch(trajectory){
+			switch(asteroid.getTrajectory()){
 
 			case 0: //diagonal to left
 
@@ -169,7 +181,8 @@ public class GameScreen extends JPanel {
 					break;
 				}
 				//sets new trajectory
-				trajectory = rand.nextInt(3); 
+				asteroid.setTrajectory(rand.nextInt(3)); 
+				
 				
 				asteroid.setLocation(getWidth()/2 - 100 + rand.nextInt(getWidth()/2),0);
 				break;
@@ -182,7 +195,7 @@ public class GameScreen extends JPanel {
 					break;
 				}
 				//sets new trajectory
-				trajectory = rand.nextInt(3);
+				asteroid.setTrajectory(rand.nextInt(3)); 
 				
 				asteroid.setLocation(rand.nextInt((getWidth()/2)+50),0);
 				break;
@@ -196,7 +209,7 @@ public class GameScreen extends JPanel {
 					break;
 				}
 				//sets new trajectory
-				trajectory = rand.nextInt(3);
+				asteroid.setTrajectory(rand.nextInt(3)); 
 				
 				asteroid.setLocation(rand.nextInt(getWidth()-asteroid.width),0);
 				break;
@@ -214,7 +227,8 @@ public class GameScreen extends JPanel {
 		//		}
 		else{
 			//sets new trajectory
-			trajectory = rand.nextInt(3);
+			//trajectory = rand.nextInt(3);
+		
 			
 			long currentTime = System.currentTimeMillis();
 			if((currentTime - lastAsteroidTime) > NEW_ASTEROID_DELAY){
@@ -227,8 +241,14 @@ public class GameScreen extends JPanel {
 			else{
 				// draw explosion
 				graphicsMan.drawAsteroidExplosion(asteroidExplosion, g2d, this);
+				
+				// remove explosion
+				
+			
+			
 			}
 
+		}	
 		}
 
 		// draw bullets
@@ -243,7 +263,9 @@ public class GameScreen extends JPanel {
 			}
 		}
 
+		
 		// check bullet-asteroid collisions
+		for (Asteroid asteroid : asteroids) {
 		for(int i=0; i<bullets.size(); i++){
 			Bullet bullet = bullets.get(i);
 			if(asteroid.intersects(bullet)){
@@ -259,7 +281,8 @@ public class GameScreen extends JPanel {
 						asteroid.width,
 						asteroid.height);
 				asteroid.setLocation(-asteroid.width, -asteroid.height);
-				status.setNewAsteroid(true);
+				asteroid.setDestroyed(true);
+				//status.setNewAsteroid(true);
 				lastAsteroidTime = System.currentTimeMillis();
 
 				// play asteroid explosion sound
@@ -270,7 +293,7 @@ public class GameScreen extends JPanel {
 				break;
 			}
 		}
-
+		}
 		// draw ship
 		if(!status.isNewShip()){
 			// draw it in its current location
@@ -293,6 +316,7 @@ public class GameScreen extends JPanel {
 		}
 
 		// check ship-asteroid collisions
+		for (Asteroid asteroid : asteroids) {
 		if(asteroid.intersects(ship)){
 			// decrease number of ships left
 			status.setShipsLeft(status.getShipsLeft() - 1);
@@ -308,6 +332,7 @@ public class GameScreen extends JPanel {
 					asteroid.height);
 			asteroid.setLocation(-asteroid.width, -asteroid.height);
 			status.setNewAsteroid(true);
+			asteroid.setDestroyed(true);
 			lastAsteroidTime = System.currentTimeMillis();
 
 			// "remove" ship
@@ -325,7 +350,7 @@ public class GameScreen extends JPanel {
 			// play asteroid explosion sound
 			soundMan.playAsteroidExplosionSound();
 		}
-
+		}
 		// update asteroids destroyed label
 		destroyedValueLabel.setText(Long.toString(status.getAsteroidsDestroyed()));
 
@@ -334,6 +359,7 @@ public class GameScreen extends JPanel {
 
 		// update score label
 		pointsValueLabel.setText(Long.toString(status.getScore()));
+
 	}
 
 	/**
@@ -533,6 +559,14 @@ public class GameScreen extends JPanel {
 
 	public void setLevelNumberLabel(JLabel levelNumber) {
 		this.levelValueLabel = levelNumber;
+	}
+
+	public GameLogic getGameLogic() {
+		return gameLogic;
+	}
+
+	public int getASTEROIDS_TIMING() {
+		return ASTEROIDS_TIMING;
 	}
 
 
