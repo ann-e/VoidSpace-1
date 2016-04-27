@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import javax.swing.Timer;
 
@@ -17,7 +18,7 @@ import rbadia.voidspace.sounds.SoundManager;
 /**
  * Handles general game logic and status.
  */
-public class GameLogic {
+public class GameLogic extends TimerTask {
 	protected GameScreen gameScreen;
 	protected GameStatus status;
 	private SoundManager soundMan;
@@ -25,8 +26,11 @@ public class GameLogic {
 	
 	private Ship ship;
 	private Asteroid asteroid;
+	private List<Asteroid> asteroids;
 	private List<Bullet> bullets;
 	private EnemyShip enemyShip;
+	
+
 	
 	/**
 	 * Create a new game logic handler
@@ -68,16 +72,19 @@ public class GameLogic {
 		
 		// init game variables
 		bullets = new ArrayList<Bullet>();
+		asteroids = new ArrayList<Asteroid>();
 
 		status.setShipsLeft(3);
 		status.setGameOver(false);
 		status.setAsteroidsDestroyed(0);
 		status.setNewAsteroid(false);
 				
-		// init the ship and the asteroid
+		// init the ship, EnemyShip and the Asteroid Timer Task
         newShip(gameScreen);
-        newAsteroid(gameScreen);
+        //newAsteroid(gameScreen);  
         newEnemyShip(gameScreen);
+       
+        
         
         // prepare game screen
         gameScreen.doNewGame();
@@ -91,6 +98,9 @@ public class GameLogic {
 		});
 		timer.setRepeats(false);
 		timer.start();
+		
+		// spawn an asteroid every 2 seconds
+		gameScreen.asteroidsBegin();
 	}
 	
 	
@@ -210,11 +220,11 @@ public class GameLogic {
 	}
 
 	/**
-	 * Returns the asteroid.
-	 * @return the asteroid
+	 * Returns the list of asteroids.
+	 * @return the list of asteroids
 	 */
-	public Asteroid getAsteroid() {
-		return asteroid;
+	public List<Asteroid> getAsteroids() {
+		return asteroids;
 	}
 
 	/**
@@ -224,4 +234,18 @@ public class GameLogic {
 	public List<Bullet> getBullets() {
 		return bullets;
 	}
+	
+	/**
+	 * Creates new a new asteroid and adds it to the 
+	 * list of asteroids.
+	 */
+	
+	public void run() {
+		asteroids.add(newAsteroid(gameScreen));
+	}
+	
+	
+
+	
+	
 }
