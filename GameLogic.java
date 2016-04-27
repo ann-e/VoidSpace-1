@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
+//import java.util.Timer;
+
+
 
 import javax.swing.Timer;
 
@@ -13,6 +16,8 @@ import rbadia.voidspace.model.Bullet;
 import rbadia.voidspace.model.EnemyShip;
 import rbadia.voidspace.model.Ship;
 import rbadia.voidspace.sounds.SoundManager;
+
+
 
 
 /**
@@ -30,6 +35,9 @@ public class GameLogic extends TimerTask {
 	private List<Bullet> bullets;
 	private EnemyShip enemyShip;
 	
+	private int ASTEROIDS_TIMING = 2000;
+	java.util.Timer asteroidTimer = new java.util.Timer(true);
+	
 
 	
 	/**
@@ -38,7 +46,7 @@ public class GameLogic extends TimerTask {
 	 */
 	public GameLogic(GameScreen gameScreen){
 		this.gameScreen = gameScreen;
-		
+		java.util.Timer asteroidTimer = new java.util.Timer(true);
 		// initialize game status information
 		status = new GameStatus();
 		// initialize the sound manager
@@ -100,7 +108,7 @@ public class GameLogic extends TimerTask {
 		timer.start();
 		
 		// spawn an asteroid every 2 seconds
-		gameScreen.asteroidsBegin();
+		asteroidsBegin(ASTEROIDS_TIMING);
 	}
 	
 	
@@ -152,7 +160,7 @@ public class GameLogic extends TimerTask {
 			}
 		});
 		timer.setRepeats(false);
-		timer.start();
+		timer.start();java.util.Timer asteroidTimer = new java.util.Timer(true);
 	}
 	
 	/**
@@ -243,6 +251,13 @@ public class GameLogic extends TimerTask {
 	public void run() {
 		asteroids.add(newAsteroid(gameScreen));
 	}
+	
+	public void asteroidsBegin(int asteroidTiming) {
+		asteroidTimer.schedule(this, 0, asteroidTiming);
+	}
+	
+	
+	
 	
 	
 
