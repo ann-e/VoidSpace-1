@@ -13,6 +13,8 @@ public class Asteroid extends Rectangle {
 	private int asteroidWidth = 32;
 	private int asteroidHeight = 32;
 	private int speed = DEFAULT_SPEED;
+	private int trajectory = 2; // default trajectory is vertical
+	private boolean destroyed = false;
 
 	private Random rand = new Random();
 	
@@ -57,4 +59,22 @@ public class Asteroid extends Rectangle {
 	public int getDefaultSpeed(){
 		return DEFAULT_SPEED;
 	}
+	
+	public int getTrajectory() {
+		return trajectory;
+	}
+
+	public void setTrajectory(int trajectory) {
+		this.trajectory = trajectory;
+	}
+	
+	public boolean getDestroyed() {
+		return destroyed;
+	}
+
+	public void setDestroyed(boolean destroyed) {
+		this.destroyed = destroyed;
+	}
+	
+	
 }
