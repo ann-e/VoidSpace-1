@@ -13,11 +13,14 @@ public class Asteroid extends Rectangle {
 	private int asteroidWidth = 32;
 	private int asteroidHeight = 32;
 	private int speed = DEFAULT_SPEED;
+	private int trajectory; 
+	private boolean destroyed = false;
 
 	private Random rand = new Random();
 	
+	
 	/**
-	 * Crates a new asteroid at a random x location at the top of the screen 
+	 * Creates a new asteroid at a random x location at the top of the screen 
 	 * @param screen the game screen
 	 */
 	public Asteroid(GameScreen screen){
@@ -25,6 +28,7 @@ public class Asteroid extends Rectangle {
         		rand.nextInt(screen.getWidth() - asteroidWidth),
         		0);
 		this.setSize(asteroidWidth, asteroidHeight);
+		this.setTrajectory(rand.nextInt(3));
 	}
 	
 	public int getAsteroidWidth() {
@@ -57,4 +61,22 @@ public class Asteroid extends Rectangle {
 	public int getDefaultSpeed(){
 		return DEFAULT_SPEED;
 	}
+	
+	public int getTrajectory() {
+		return trajectory;
+	}
+
+	public void setTrajectory(int trajectory) {
+		this.trajectory = trajectory;
+	}
+	
+	public boolean getDestroyed() {
+		return destroyed;
+	}
+
+	public void setDestroyed(boolean destroyed) {
+		this.destroyed = destroyed;
+	}
+	
+	
 }
